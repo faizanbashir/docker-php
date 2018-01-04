@@ -47,6 +47,11 @@ RUN \
   apt-get clean && \
   rm -rf /var/lib/apt/lists/*
 
+# Data Volumes
+# RUN mkdir -p /app
+# VOLUME [ "/app" ]
+
+#Expose port 9000
 EXPOSE 9000
 
-CMD [ "/bin/bash" ]
+ENTRYPOINT ["/etc/init.d/php7.2-fpm", "-F"]
