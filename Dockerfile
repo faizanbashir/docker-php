@@ -54,4 +54,4 @@ RUN \
 #Expose port 9000
 EXPOSE 9000
 
-ENTRYPOINT ["/etc/init.d/php7.2-fpm", "-F"]
+ENTRYPOINT ["/etc/init.d/php7.2-fpm", "start"]
