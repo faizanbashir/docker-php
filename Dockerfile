@@ -25,7 +25,7 @@ COPY run.sh /run.sh
 
 COPY wkhtmltopdf /usr/local/bin
 
-COPY config/opcache.ini $PHP_INI_DIR/conf.d/
+COPY opcache.ini $PHP_INI_DIR/conf.d/
 
 COPY php.ini $PHP_INI_DIR/
 
