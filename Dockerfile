@@ -1,57 +1,29 @@
-From faizanbashir/ubuntu-xenial:latest
-MAINTAINER faizanbashir <faizan.ibn.bashir@gmail.com>
+FROM php:fpm-alpine
+LABEL MAINTAINER="Faizan Bashir <faizan.ibn.bashir@gmail.com>"
 
-# disable interactive functions
-ENV DEBIAN_FRONTEND noninteractive
+RUN apk --update \
+        --repository http://dl-3.alpinelinux.org/alpine/v3.6/main/ \
+        upgrade && \
+    apk --update \
+        --repository http://dl-3.alpinelinux.org/alpine/v3.6/main/ \
+        --repository http://dl-3.alpinelinux.org/alpine/v3.6/community/ \
+        add bash shadow git curl vim grep sed wget tar gzip postfix openssl icu icu-dev libtool imagemagick-dev make g++ autoconf perl rabbitmq-c-dev freetype-dev libjpeg-turbo-dev libmcrypt-dev libpng-dev pcre-dev libxml2-dev ttf-freefont libgcc libstdc++ libx11 glib libxrender libxext libintl libcrypto1.0 libssl1.0 libmemcached-dev cyrus-sasl-dev && \
+    apk --update \
+        --repository http://dl-3.alpinelinux.org/alpine/edge/community/ \
+        add jpegoptim && \
+    docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ && \
+    docker-php-ext-install iconv gd bcmath exif intl opcache pcntl sockets zip pdo_mysql soap calendar mysqli && \
+    pecl install imagick amqp mcrypt-1.0.1 redis memcached xdebug && \
+    docker-php-ext-enable imagick amqp redis memcached mcrypt && \
+    apk del --purge make g++ autoconf libtool && \
+    rm -rf /var/cache/apk/*
 
-RUN \
-  apt-get install -y language-pack-en-base && \
-  export LC_ALL=en_US.UTF-8 && \
-  export LANG=en_US.UTF-8 && \
-  apt-get install -y python-software-properties software-properties-common && \
-  add-apt-repository ppa:ondrej/php -y && \
-  apt-get update && \
-  apt-get install -y \
-    php7.2 \
-    php7.2-fpm \
-    php7.2-cli \
-    php7.2-dev \
-    php7.2-opcache \
-    php7.2-bcmath \
-    php7.2-bz2 \
-    php7.2-common \
-    php7.2-curl \
-    php7.2-dba \
-    php7.2-enchant \
-    php7.2-gd \
-    php7.2-imap \
-    php7.2-json \
-    php7.2-ldap \
-    php7.2-mbstring \
-    php-mcrypt \
-    php7.2-pspell \
-    php7.2-readline \
-    php7.2-soap \
-    php7.2-xml \
-    php7.2-zip \
-    php7.2-mysql \
-    php-imagick \
-    php-redis \
-    php-mongodb \
-    dh-make \
-    mysql-client \
-    composer \ 
-    && \
-  apt-get remove -y python-software-properties software-properties-common && \
-  apt-get autoremove -y && \
-  apt-get clean && \
-  rm -rf /var/lib/apt/lists/*
+COPY run.sh /run.sh
 
-# Data Volumes
-# RUN mkdir -p /app
-# VOLUME [ "/app" ]
+COPY wkhtmltopdf /usr/local/bin
 
-#Expose port 9000
+COPY php.ini /usr/local/etc/php/
+
 EXPOSE 9000
 
-ENTRYPOINT ["/etc/init.d/php7.2-fpm", "start"]
+CMD /run.sh
