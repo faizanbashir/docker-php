@@ -9,7 +9,9 @@ RUN apk --update \
     apk --update \
         --repository http://dl-3.alpinelinux.org/alpine/v3.6/main/ \
         --repository http://dl-3.alpinelinux.org/alpine/v3.6/community/ \
-        add bash shadow git curl vim grep sed wget tar gzip postfix openssl icu icu-dev libtool imagemagick-dev make g++ autoconf perl rabbitmq-c-dev freetype-dev libjpeg-turbo-dev libmcrypt-dev libpng-dev pcre-dev libxml2-dev ttf-freefont libgcc libstdc++ libx11 glib libxrender libxext libintl libcrypto1.0 libssl1.0 libmemcached-dev cyrus-sasl-dev composer && \
+        add bash shadow git curl vim grep sed wget tar gzip postfix openssl icu icu-dev libtool imagemagick-dev make g++ autoconf perl rabbitmq-c-dev freetype-dev libjpeg-turbo-dev libmcrypt-dev libpng-dev pcre-dev libxml2-dev ttf-freefont libgcc libstdc++ libx11 glib libxrender libxext libintl libcrypto1.0 libssl1.0 libmemcached-dev cyrus-sasl-dev && \
+        curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer && \
+	    chmod +x /usr/local/bin/composer && \
     apk --update \
         --repository http://dl-3.alpinelinux.org/alpine/edge/community/ \
         add jpegoptim && \
