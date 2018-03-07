@@ -16,7 +16,6 @@ RUN apk --update \
         --repository http://dl-3.alpinelinux.org/alpine/edge/community/ \
         add jpegoptim && \
     docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ && \
-    docker-php-ext-configure opcache --enable-opcache && \
     docker-php-ext-install iconv gd bcmath exif intl opcache pcntl json xml sockets zip pdo_mysql soap calendar mysqli && \
     pecl install imagick amqp mcrypt-1.0.1 redis memcached xdebug && \
     docker-php-ext-enable imagick amqp redis memcached mcrypt opcache && \
@@ -26,8 +25,6 @@ RUN apk --update \
 COPY run.sh /run.sh
 
 COPY wkhtmltopdf /usr/local/bin
-
-COPY opcache.ini $PHP_INI_DIR/conf.d/
 
 COPY php.ini $PHP_INI_DIR/
 
