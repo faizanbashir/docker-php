@@ -1,4 +1,4 @@
-FROM php:fpm-alpine
+FROM php:7.2.4-fpm-alpine3.7
 LABEL MAINTAINER="Faizan Bashir <faizan.ibn.bashir@gmail.com>"
 
 ENV PHP_INI_DIR /usr/local/etc/php
