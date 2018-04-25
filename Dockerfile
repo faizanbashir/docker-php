@@ -13,7 +13,7 @@ RUN apk --update \
         curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer && \
 	    chmod +x /usr/local/bin/composer && \
     apk --update \
-        --repository http://dl-3.alpinelinux.org/alpine/edge/community/ \
+        --repository http://dl-3.alpinelinux.org/alpine/v3.7/community/ \
         add jpegoptim && \
     docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ && \
     docker-php-ext-install iconv gd bcmath exif intl opcache pcntl json xml sockets zip pdo_mysql soap calendar mysqli && \
