@@ -28,8 +28,6 @@ COPY wkhtmltopdf /usr/local/bin
 
 COPY php.ini $PHP_INI_DIR/
 
-USER www-data
-
 EXPOSE 9000
 
 CMD /run.sh
